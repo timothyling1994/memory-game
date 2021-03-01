@@ -22,11 +22,10 @@ html,body{
 
 .header{
   background-color: purple;
-  font-size: 50px;
+  font-size: 30px;
   width:100%;
-  
-}
 
+}
 .score-row{
   width:100%;
 }
