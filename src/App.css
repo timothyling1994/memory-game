@@ -14,6 +14,7 @@ html,body{
    height:100vh;
 
    display:flex;
+   flex-wrap:wrap;
    flex-direction: row;
    justify-content: center;
    align-content: flex-start;
@@ -21,11 +22,15 @@ html,body{
 }
 
 .header{
-  background-color: purple;
   font-size: 30px;
   width:100%;
 
 }
 .score-row{
   width:100%;
+}
+
+img{
+  width:25vw;
+  height:35vh;
 }

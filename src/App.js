@@ -1,53 +1,60 @@
 import './App.css';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header.js";
 import Card from "./components/Card.js";
-import uniqid from "uniqid";
+import CardIDs from "./cardIDs.js";
+
 
 function App() {
 
-  const totalCards = 8;
   let cardOrderArr=[];
-  const cardImagesLocArr = [
-    "andre_iguodala",
-    "andrew_bogut",
-    "draymond_green",
-    "harrison_barnes",
-    "klay_thompson",
-    "leandro_barbosa",
-    "marreese_speights",
-    "stephen_curry"
-  ]
+  const totalCards = CardIDs.cardIDs.length;
+  const [selectedCards,setCardSelection] = useState([]);
+  const [score,setScore] = useState(0);
 
   const initCardOrderArr=()=>{
+  
     for(let i=0;i<totalCards;i++)
     {
       cardOrderArr[i]=i;
     }
   };
 
+  initCardOrderArr();
+  const [cardOrder,setCardOrder] = useState(cardOrderArr);
+
   const randomizeCardOrder = () =>{
+
     cardOrderArr.sort(function(){
       return Math.random() - 0.5;
     });
-    console.log(cardOrderArr);
+  
+    const copyArr = [...cardOrderArr];
+    setCardOrder(copyArr);
   };
 
-  initCardOrderArr();
-  randomizeCardOrder();
-
-  const [selectedCards,setCardSelection] = useState([]);
-
-  const makeCardSelection=(cardNum)=>{
-    let newArr = selectedCards.concat(cardNum);
-    setCardSelection(newArr);
+  const makeCardSelection=(cardId)=>{
+    
+    if(!selectedCards.includes(cardId))
+    {
+      let newArr = selectedCards.concat(cardId);
+      setCardSelection(newArr);
+      setScore(score+1);
+    }
+    else{
+      console.log("Game Over");
+      setCardSelection([]);
+      setScore(0);
+    }
   };
+
+  useEffect(randomizeCardOrder,[score]);
 
   return (
     <div className="App">
-      <Header/>
-      {cardOrderArr.map((cardNum)=>{
-        return <Card key={uniqid()} uniqid imgSrc={cardImagesLocArr[cardNum]}/>
+      <Header currentScore={score}/>
+      {cardOrder.map((cardNum)=>{   
+        return <Card key={CardIDs.cardIDs[cardNum][1]} id={CardIDs.cardIDs[cardNum][1]} imgName={CardIDs.cardIDs[cardNum][0]} makeCardSelection={makeCardSelection}/>
       })}
     </div>
   );

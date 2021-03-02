@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
+
 
 function Card(props) {
-  console.log(props);
 
-//<img src={require(`../assets/${props.imgSrc}.jpg`)}></img>
+  const registerClick = () => {
+    props.makeCardSelection(props.id);
+  };
+
   return (
-    //console.log(`../assets/${props.imgSrc}.jpg`);
-    <div className="card">
-      <img src={`../assets/${props.imgSrc}.jpg`}></img>
+    <div className="card" id={props.id} onClick={registerClick}>
+      <img src={`/assets/${props.imgName}.jpg`} alt={props.imgName}></img>
+      <div className="caption">{props.imgName}</div>
     </div>
   );
 }
